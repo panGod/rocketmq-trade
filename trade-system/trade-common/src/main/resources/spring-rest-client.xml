@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.pan.trade.common.client.RestClientProxy" id="userClientProxy">
+        <property name="serviceInterface" value="com.pan.trade.common.api.IUserApi"></property>
+        <property name="serverEnum" value="USER"/>
+    </bean>
+
+    <bean class="com.pan.trade.common.client.RestClientProxy" id="OrderClientProxy">
+        <property name="serviceInterface" value="com.pan.trade.common.api.IOrderApi"></property>
+        <property name="serverEnum" value="ORDER"/>
+    </bean>
+
+
+    <bean class="com.pan.trade.common.client.RestClientProxy" id="GoodsClientProxy">
+        <property name="serviceInterface" value="com.pan.trade.common.api.IGoodsApi"></property>
+        <property name="serverEnum" value="GOODS"/>
+    </bean>
+
+
+    <bean class="com.pan.trade.common.client.RestClientProxy" id="PayClientProxy">
+        <property name="serviceInterface" value="com.pan.trade.common.api.IPayApi"></property>
+        <property name="serverEnum" value="PAY"/>
+    </bean>
+
+    <bean class="com.pan.trade.common.client.RestClientProxy" id="voucherClientProxy">
+        <property name="serviceInterface" value="com.pan.trade.common.api.ICouponApi"></property>
+        <property name="serverEnum" value="VOUCHER"/>
+    </bean>
+
+</beans>
