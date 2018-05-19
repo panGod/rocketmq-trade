@@ -226,4 +226,16 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </update>
+  <update id="reduceGoodsNumber" parameterType="com.pan.bean.TradeGoods" >
+    UPDATE trade_goods
+    SET goods_number = goods_number- #{goodsNumber,jdbcType=INTEGER}
+    where goods_id=#{goodsId}
+    and goods_number>=#{goodsNumber,jdbcType=INTEGER}
+  </update>
+
+  <update id="addGoodsNumber" parameterType="com.pan.bean.TradeGoods" >
+     UPDATE trade_goods
+    SET goods_number = goods_number + #{goodsNumber,jdbcType=INTEGER}
+    where goods_id=#{goodsId}
+  </update>
 </mapper>

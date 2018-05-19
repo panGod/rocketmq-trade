@@ -16,6 +16,7 @@
         <module>trade-common</module>
         <module>trade-dao</module>
         <module>trade-user</module>
+        <module>trade-goods</module>
     </modules>
 
     <properties>

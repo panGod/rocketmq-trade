@@ -226,4 +226,19 @@
       used_time = #{usedTime,jdbcType=TIMESTAMP}
     where coupon_id = #{couponId,jdbcType=VARCHAR}
   </update>
+    <update id="useCoupon" parameterType="com.pan.bean.TradeCoupon" >
+      UPDATE trade_coupon
+      SET is_used='1',
+          order_id=#{orderId},
+          use_time=now()
+          where coupon_id = #{couponId}
+          and is_used='0'
+    </update>
+    <update id="unuseCoupon" parameterType="com.pan.bean.TradeCoupon" >
+      UPDATE trade_coupon
+      SET is_used='0',
+          order_id=NULL ,
+          use_time=NULL
+          where coupon_id = #{couponId}
+    </update>
 </mapper>

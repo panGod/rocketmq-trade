@@ -27,4 +27,9 @@ public interface TradeGoodsMapper {
     int updateByPrimaryKeySelective(TradeGoods record);
 
     int updateByPrimaryKey(TradeGoods record);
+
+    int reduceGoodsNumber(TradeGoods tradeGoods);
+
+    int addGoodsNumber(TradeGoods tradeGoods);
+
 }

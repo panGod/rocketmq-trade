@@ -1,17 +1,18 @@
-package com.pan.trade.user.mq.processor;
+package com.pan.trade.coupon.mq.processor;
 
 import com.alibaba.fastjson.JSON;
 import com.pan.trade.common.protocol.mq.CancelOrderMQ;
 import com.pan.trade.common.protocol.user.ChangeUserMoneyReq;
+import com.pan.trade.common.protocol.voucher.ChangeCouponStatusReq;
 import com.pan.trade.common.rocketmq.IMessageProcessor;
 import com.pan.trade.common.tenum.TradeEnum;
-import com.pan.trade.user.service.IUserService;
+import com.pan.trade.coupon.service.CouponService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
 /**
@@ -22,7 +23,7 @@ public class CancelOrderProcessor implements IMessageProcessor {
     private static final Logger logger = LoggerFactory.getLogger(CancelOrderProcessor.class);
 
     @Autowired
-    private IUserService userService;
+    private CouponService couponService;
 
     public boolean handleMessage(MessageExt messageExt) {
         try {
@@ -31,13 +32,13 @@ public class CancelOrderProcessor implements IMessageProcessor {
             String tags = messageExt.getTags();
             String keys = messageExt.getKeys();
             CancelOrderMQ cancelOrderMQ = JSON.parseObject(body,CancelOrderMQ.class);
-            logger.info("user CancelOrdermessage:"+body);
-            if (cancelOrderMQ.getUserMoney() !=null && cancelOrderMQ.getUserMoney().compareTo(BigDecimal.ZERO) == 1){
-                ChangeUserMoneyReq changeUserMoneyReq = new ChangeUserMoneyReq();
-                changeUserMoneyReq.setUserId(cancelOrderMQ.getUserId());
-                changeUserMoneyReq.setMoneyLogType(Integer.valueOf(TradeEnum.UserMoneyLogTypeStatusEnum.RETURN.getCode()));
-                changeUserMoneyReq.setUserMoney(cancelOrderMQ.getUserMoney());
-                userService.changeUserMoney(changeUserMoneyReq);
+            logger.info("coupon CancelOrdermessage:"+body);
+            if (StringUtils.isNotBlank(cancelOrderMQ.getCouponId())){
+                ChangeCouponStatusReq changeCouponStatusReq = new ChangeCouponStatusReq();
+                changeCouponStatusReq.setOrderId(cancelOrderMQ.getOrderId());
+                changeCouponStatusReq.setCouponId(cancelOrderMQ.getCouponId());
+                changeCouponStatusReq.setIsUsed(TradeEnum.CouponYESORNOStatusEnum.NO.getCode());
+                couponService.changeCouponStatus(changeCouponStatusReq);
             }
             return true;
         } catch (Exception e) {

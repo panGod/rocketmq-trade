@@ -25,6 +25,8 @@ public class PanPushConsumer {
     private String tags="*";//默认订阅该主题下的所有的tags
     private int maxConsumeThread=64;
 
+
+
     private IMessageProcessor processor;
 
 
@@ -64,5 +66,11 @@ public class PanPushConsumer {
     public void setProcessor(IMessageProcessor processor) {
         this.processor = processor;
     }
+    public String getTags() {
+        return tags;
+    }
 
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="cancelOrderProcessor" class="com.pan.trade.user.mq.processor.CancelOrderProcessor"></bean>
+
+    <bean class="com.pan.trade.common.rocketmq.PanPushConsumer" id="orderConsumer">
+        <property name="groupName" value="user_orderTopic_cancel_group"></property>
+        <property name="tags" value="cancel"></property>
+        <property name="topic" value="orderTopic"></property>
+        <property name="namesrvAddr" value="192.168.136.128:9876"></property>
+        <property name="processor" ref="cancelOrderProcessor"></property>
+    </bean>
+
+</beans>
